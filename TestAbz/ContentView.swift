@@ -3,101 +3,116 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selectedTab = 0
-    var usersArray: [User] = [
-        User(image: Image("EmptyPhoto"),
-             name: "Malcolm Bailey", email: "jany_murazik51@hotmail.com", phone: "+38 (098) 278 76 24", position: .frontend),
-        User(image: Image("EmptyPhoto"),
-             name: "Seraphina Anastasia Isolde Aurelia Celestina von Hohenzollern", email: "jany_murazik51@hotmail.com", phone: "+38 (098) 278 76 24", position: .frontend)
-    ]
-    
+    @State var usersArray: [User] = []
+  
     var body: some View {
         VStack {
             TopToolbar(title: "Working with GET request")
                 .padding(.top, 10)
+            
             if selectedTab == 0 {
-                VStack {
-                    List(usersArray, id: \.name) { user in
-                        HStack(alignment: .top) {
-                            user.image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 50, height: 50)
-                                .clipShape(Circle())
-                                .padding(.top, 0)
-                            VStack(alignment: .leading) {
-                                Text(user.name)
-                                    .font(.custom("Nunito Sans", size: 18))
-                                    .foregroundColor(Color("TextDarkDrayColor", bundle: nil))
-                                    .lineLimit(nil)
-                                Spacer(minLength: 5)
-                                Text(user.position.rawValue)
-                                    .font(.custom("Nunito Sans", size: 14))
-                                    .foregroundColor(Color("TextLightGrayColor", bundle: nil))
-                                    .lineLimit(nil)
-                                Spacer(minLength: 5)
-                                Text(user.email)
-                                    .font(.custom("Nunito Sans", size: 14))
-                                    .foregroundColor(Color("TextDarkDrayColor", bundle: nil))
-                                
-                                    .lineLimit(nil)
-                                Spacer(minLength: 5)
-                                Text(user.phone)
-                                    .font(.custom("Nunito Sans", size: 14))
-                                    .foregroundColor(Color("TextDarkDrayColor", bundle: nil))
-                                    .lineLimit(nil)
-                            }
-                            .padding(.leading, 10)
-                        }
-                        .padding(.vertical, 15)
-                    }
-                    .listStyle(PlainListStyle())
-                    .background(Color.white)
-                    Spacer()
-                }
+                UsersListView(users: usersArray)
+                
             } else {
                 SignUpView()
             }
+            
             Spacer()
-            HStack {
-                Spacer()
-                Button(action: {
-                    selectedTab = 0
-                }) {
-                    HStack {
-                        Image("ThreePearson")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 24, height: 24)
-                        
-                        Text("Users")
-                            .font(.custom("Nunito Sans", size: 16))
-                            .foregroundColor(Color("BlueColor", bundle: nil))
-                    }
-                    .padding()
-                }
-                Spacer()
-                Button(action: {
-                    selectedTab = 1
-                }) {
-                    HStack {
-                        Image("AddPearsonDark")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 24, height: 24)
-                        
-                        Text("Sign up")
-                            .font(.custom("Nunito Sans", size: 16))
-                            .foregroundColor(Color("TextGrayColor", bundle: nil))
-                    }
-                    .padding()
-                }
-                Spacer()
-            }
-            .frame(maxWidth: .infinity)
-            .background(Color.gray)
-            .shadow(radius: 5)
-        }        
+            BottomTabBar(selectedTab: $selectedTab)
+            
+        }
+        .onAppear {
+                   fetchUsers(page: 1, count: 10) { users, error in
+                       if let users = users {
+                           DispatchQueue.main.async {
+                               usersArray = users
+                           }
+                       } else {
+                           print("Ошибка загрузки пользователей:", error?.localizedDescription ?? "Неизвестная ошибка")
+                       }
+                   }
+            
+               }
     }
+}
+
+
+struct UsersListView: View {
+    var users: [User]
+
+    var body: some View {
+        List(users) { user in
+            HStack(alignment: .top) {
+                AsyncImage(url: URL(string: user.photo)) { image in
+                    image.resizable()
+                } placeholder: {
+                    Image(systemName: "person.circle.fill")
+                        .resizable()
+                        .foregroundColor(.gray)
+                }
+                .frame(width: 50, height: 50)
+                .clipShape(Circle())
+                .padding(.horizontal, 10)
+                    
+                VStack(alignment: .leading) {
+                    Text(user.name)
+                        .font(.custom(NutinoSansFont.regular.rawValue, size: 18))
+                    
+                        .foregroundColor(Color("TextDarkDrayColor", bundle: nil))
+                        .lineLimit(nil)
+                    Spacer(minLength: 0)
+                    
+                    Text(user.position)
+                        .font(.custom(NutinoSansFont.light.rawValue, size: 14))
+                        .foregroundColor(Color("TextLightGrayColor", bundle: nil))
+                        .lineLimit(nil)
+                    Spacer(minLength: 0)
+                    Text(user.email)
+                        .font(.custom(NutinoSansFont.regular.rawValue, size: 14))
+                        .foregroundColor(Color("TextDarkDrayColor", bundle: nil))
+                        .lineLimit(nil)
+                    Spacer(minLength: 5)
+                    Text(user.phone)
+                        .font(.custom(NutinoSansFont.regular.rawValue, size: 14))
+                        .foregroundColor(Color("TextDarkDrayColor", bundle: nil))
+                        .lineLimit(nil)
+                }
+            }
+            .padding(.vertical, 15)
+        }
+        .listStyle(PlainListStyle())
+        .background(Color.white)
+        Spacer()
+
+    }
+}
+
+func fetchUsers(page: Int, count: Int, completion: @escaping ([User]?, Error?) -> Void) {
+    let urlString = "https://frontend-test-assignment-api.abz.agency/api/v1/users?page=\(page)&count=\(count)"
+    
+    guard let url = URL(string: urlString) else {
+        completion(nil, NSError(domain: "Invalid URL", code: 400, userInfo: nil))
+        return
+    }
+    
+    URLSession.shared.dataTask(with: url) { data, response, error in
+        if let error = error {
+            completion(nil, error)
+            return
+        }
+        
+        guard let data = data else {
+            completion(nil, NSError(domain: "No data", code: 404, userInfo: nil))
+            return
+        }
+        
+        do {
+            let decodedResponse = try JSONDecoder().decode(UsersResponse.self, from: data)
+            completion(decodedResponse.users, nil)
+        } catch {
+            completion(nil, error)
+        }
+    }.resume()
 }
 
 #Preview {

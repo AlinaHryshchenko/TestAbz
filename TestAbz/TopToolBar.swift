@@ -8,7 +8,7 @@ struct TopToolbar: View {
     
     var body: some View {
         Text(title)
-            .font(.custom("Nunito Sans", size: 20))
+            .font(.custom(NutinoSansFont.regular.rawValue, size: 20))
             .foregroundColor(.black)
             .padding(16)
             .frame(maxWidth: .infinity)

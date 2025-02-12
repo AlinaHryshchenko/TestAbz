@@ -1,20 +1,21 @@
-//
-//  User.swift
-//  TestAbz
-//
-//  Created by Alina Hryshchenko on 07/02/2025.
-//
+
 
 import Foundation
 import UIKit
 import SwiftUI
 
-struct User {
-    var image: Image
-    var name: String
-    var email: String
-    var phone: String
-    var position: TypePosition
+struct User: Identifiable, Decodable {
+    let id: Int
+    let name: String
+    let email: String
+    let phone: String
+    let position: String
+    let photo: String
+}
+
+struct UsersResponse: Decodable {
+    let success: Bool
+    let users: [User]
 }
 
 enum TypePosition: String {
@@ -23,3 +24,4 @@ enum TypePosition: String {
     case designer = "Designer"
     case qa = "QA"
 }
+

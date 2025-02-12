@@ -24,7 +24,7 @@ struct NoUsersView: View {
             }
             .padding()
            
-            BottomToolbar()
+          //  BottomToolbar()
         }
         .padding(.bottom, -35)
         .edgesIgnoringSafeArea(.bottom)

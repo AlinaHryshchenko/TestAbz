@@ -3,73 +3,50 @@
 import Foundation
 import SwiftUI
 
-struct BottomToolbar: View {
+struct BottomTabBar: View {
+    @Binding var selectedTab: Int
+    
     var body: some View {
-        //        HStack {
-        //            NavigationLink(
-        //                destination: ContentView().navigationBarBackButtonHidden(true),
-        //                isActive: .constant(true)
-        //            ) {
-        //                        Label("Users", image: "ThreePearson")
-        //                            .font(.custom("Nunito Sans", size: 16))
-        //                            .foregroundColor(Color("BlueColor", bundle: nil))
-        //                            .padding()
-        //                            .frame(maxWidth: .infinity)
-        //                    }
-        //            
-        //            NavigationLink(
-        //                destination: SignUpView().navigationBarBackButtonHidden(true),
-        //                isActive: .constant(true)
-        //                    
-        //            ) {
-        //                Label("Sign up", image: "AddPearsonDark")
-        //                    .font(.custom("Nunito Sans", size: 16))
-        //                            .foregroundColor(Color("TextGrayColor", bundle: nil))
-        //                            .padding()
-        //                            .frame(maxWidth: .infinity)
-        //                            .cornerRadius(8)
-        //                    }
-        //                    .buttonStyle(PlainButtonStyle()) 
-        //                }
-        //                .frame(height: 56)
-        //                .background(Color("GrayColor", bundle: nil))
-        //                .cornerRadius(0)
-        //            }
-        //        }
-        
-        TabView() {
-            VStack{
-
+        HStack {
+            Spacer()
+            Button(action: {
+                selectedTab = 0
+            }) {
+                HStack {
+                    Image("ThreePearson")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
+                    
+                    Text("Users")
+                        .font(.custom("Nunito Sans", size: 16))
+                        .foregroundColor(Color("BlueColor", bundle: nil))
+                }
+                .padding()
             }
-                ContentView()
-          
-                    .tabItem {
-                        Label("Users", image: "ThreePearson")
-                            .font(.custom("Nunito Sans", size: 16))
-                            .foregroundColor(Color("BlueColor", bundle: nil))
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                        
-                    }
-                           SignUpView()
-                      
-                    .tabItem {
-                        Label("Sign up", image: "AddPearsonDark")
-                            .font(.custom("Nunito Sans", size: 16))
-                            .foregroundColor(Color("TextGrayColor", bundle: nil))
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .cornerRadius(8)
-                    }
-                    .buttonStyle(PlainButtonStyle())
-            
+            Spacer()
+            Button(action: {
+                selectedTab = 1
+            }) {
+                HStack {
+                    Image("AddPearsonDark")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
+                    
+                    Text("Sign up")
+                        .font(.custom("Nunito Sans", size: 16))
+                        .foregroundColor(Color("TextGrayColor", bundle: nil))
+                }
+                .padding()
+            }
+            Spacer()
         }
-        
-        .frame(maxHeight: .infinity)
-                .edgesIgnoringSafeArea(.bottom)
+        .frame(maxWidth: .infinity)
+        .background(Color.gray)
+        .shadow(radius: 5)
     }
 }
-            
           
       
 
