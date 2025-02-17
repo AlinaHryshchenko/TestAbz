@@ -18,10 +18,19 @@ struct UsersResponse: Decodable {
     let users: [User]
 }
 
-enum TypePosition: String {
+
+enum TypePosition: String, CaseIterable, Identifiable {
     case frontend = "Frontend developer"
     case backend = "Backend developer"
     case designer = "Designer"
     case qa = "QA"
+    
+    var id: Int {
+        switch self {
+        case .frontend: return 1
+        case .backend: return 2
+        case .designer: return 3
+        case .qa: return 4
+        }
+    }
 }
-

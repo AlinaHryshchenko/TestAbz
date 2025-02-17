@@ -178,6 +178,7 @@
 		9AEA51062D5B860D006E0595 /* NunitoSans_7pt_SemiCondensed-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9AEA50662D5B860C006E0595 /* NunitoSans_7pt_SemiCondensed-ExtraBoldItalic.ttf */; };
 		9AEA51072D5B860D006E0595 /* NunitoSans_7pt_SemiCondensed-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9AEA50672D5B860C006E0595 /* NunitoSans_7pt_SemiCondensed-MediumItalic.ttf */; };
 		9AEA51092D5B9C44006E0595 /* NutinoSansFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA51082D5B9C44006E0595 /* NutinoSansFont.swift */; };
+		9AEA510B2D5D5AFE006E0595 /* ValidatorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEA510A2D5D5AFE006E0595 /* ValidatorManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -354,6 +355,7 @@
 		9AEA50662D5B860C006E0595 /* NunitoSans_7pt_SemiCondensed-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NunitoSans_7pt_SemiCondensed-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
 		9AEA50672D5B860C006E0595 /* NunitoSans_7pt_SemiCondensed-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NunitoSans_7pt_SemiCondensed-MediumItalic.ttf"; sourceTree = "<group>"; };
 		9AEA51082D5B9C44006E0595 /* NutinoSansFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutinoSansFont.swift; sourceTree = "<group>"; };
+		9AEA510A2D5D5AFE006E0595 /* ValidatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatorManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -395,6 +397,7 @@
 				9AEA4FA82D56BEBF006E0595 /* NoUsersView.swift */,
 				9AEA4FA62D563E18006E0595 /* BottomToolbar.swift */,
 				9AEA4FAA2D56C1D3006E0595 /* User.swift */,
+				9AEA510A2D5D5AFE006E0595 /* ValidatorManager.swift */,
 				9AEA51082D5B9C44006E0595 /* NutinoSansFont.swift */,
 				9AEA4F942D557201006E0595 /* Assets.xcassets */,
 				9AEA4FA02D558068006E0595 /* Launch Screen.storyboard */,
@@ -811,6 +814,7 @@
 			files = (
 				9AEA51092D5B9C44006E0595 /* NutinoSansFont.swift in Sources */,
 				9AEA4F932D5571FE006E0595 /* ContentView.swift in Sources */,
+				9AEA510B2D5D5AFE006E0595 /* ValidatorManager.swift in Sources */,
 				9AEA4FA52D563DFF006E0595 /* TopToolBar.swift in Sources */,
 				9AEA4FA92D56BEBF006E0595 /* NoUsersView.swift in Sources */,
 				9AEA4FA32D563C59006E0595 /* SignUpView.swift in Sources */,
